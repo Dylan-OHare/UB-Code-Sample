@@ -1,0 +1,135 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+const int maxRows = 100;
+const int maxCols = 100;
+
+/*A function that will populate a 2-d array of doubles with numbers between -100 and 100
+Inputs  : array of doubles (2D); number of rows (integer); number of columns (integer)
+Outputs : array of doubles (2D) modified
+*/
+void fillArray2D(double[][maxCols], int, int);
+
+/*
+A function that will print a 2-d array of doubles
+Inputs  : array of doubles (2D); number of rows (integer); number of columns (integer)
+Outputs : none (just a print)
+*/
+void printArray2D(double[][maxCols], int, int);
+
+/*
+A function that returns the sum of all elements in a 2D array of doubles
+Inputs: Array of doubles, Size (rows/columnms)
+Outputs: the sum (double)
+*/
+double arraySum(double[][maxCols], int, int);
+
+/*
+A function that returns the sum of each row for a 2D array of doubles
+Inputs: Array of doubles, Size
+Outputs: the sum of EACH row (1D array essesntially)
+*/
+void rowSum(double[][maxCols], int, int, double rS[]);
+
+/*
+A function that returns the largest element of each column for a 2-D array of doubles
+Inputs: 2D array of doubles, size
+Outputs: 1D array of doubles
+*/
+void getmaxCols(double[][maxCols], double mC[], int, int);
+
+int main()
+{
+	//declaration
+	double A[maxRows][maxCols];
+	int N = 5; //number of columns
+	int M = 7; //number of rows
+
+	fillArray2D(A, M, N);
+
+	//print the array
+	printArray2D(A, M, N);
+
+	//print sum
+	cout << "The sum of all of the elements in the array is" << arraySum(A, M, N) << endl;
+
+	//print the sum of each row
+	double R[maxRows];
+	rowSum(A, M, N, R);
+	cout << "The sum of each row is: " << endl;
+	for (int i = 0; i < M; i++)
+		cout << R[i] << endl;
+
+	//print the max of each col
+	double C[maxCols];
+	getmaxCols(A, C, M, N);
+	cout << "The max of each col is:" << endl;
+	for (int x = 0; x < N; x++)
+		cout << C[x] << endl;
+
+	system("pause");
+	return 0;
+}
+
+void fillArray2D(double A[][maxCols], int M, int N)
+{
+
+	//fill the array with random numbers between -100 and 100
+	for (int row = 0; row < M; row++)  //to loop over all the rows
+	{
+		for (int col = 0; col < N; col++)  //to loop over all the columns
+		{
+			A[row][col] = rand() % 201 - 100;
+		}
+	}
+}
+
+void printArray2D(double A[][maxCols], int M, int N)
+{
+
+	for (int row = 0; row < M; row++)  //to loop over all the rows
+	{
+		for (int col = 0; col < N; col++)  //to loop over all the columns
+		{
+			cout << A[row][col] << "\t";
+		}
+		cout << endl;
+	}
+
+
+}
+
+double arraySum(double A[][maxCols], int M, int N)
+{
+
+	double sum = 0.0;
+	for (int row = 0; row < M; row++)
+		for (int col = 0; col < N; col++)
+			sum += A[row][col];
+	return sum;
+}
+
+void rowSum(double A[][maxCols], int M, int N, double rS[])
+{
+	for (int row = 0; row < M; row++)
+	{
+		double sum = 0.0;
+		for (int col = 0; col < N; col++)
+			sum += A[row][col];
+		rS[row] = sum;
+	}
+}
+
+void getmaxCols(double A[][maxCols], double mC[], int M, int N)
+{
+	for (int col = 0; col < N; col++)
+	{
+		double tempMax = A[0][col]; // intitialize to the first element in the col
+		for (int row = 0; row < M; row++)
+			if (A[row][col] > tempMax)
+				tempMax = A[row][col];
+		mC[col] = tempMax;
+	}
+}
